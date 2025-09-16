@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
-import classes from './Home.module.css'
+import classes from './Start.module.css'
 import KeyButton from '../../ui/KeyButton/KeyButton'
 import Input from '../../ui/Input/Input'
 
-export default function Home() {
+export default function Start() {
   const [password, setPassword] = useState('')
   const [inputVisible, setInputVisible] = useState(false)
 

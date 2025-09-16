@@ -1,9 +1,8 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import './style.css'
-import App from './App'
 import { HashRouter, Routes, Route } from 'react-router'
-import Home from './components/pages/Home/Home'
+import Start from './components/pages/Start/Start'
 
 const container = document.getElementById('root')
 
@@ -13,7 +12,7 @@ root.render(
   <React.StrictMode>
     <HashRouter basename="/">
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Start />} />
       </Routes>
     </HashRouter>
   </React.StrictMode>

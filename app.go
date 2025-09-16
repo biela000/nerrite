@@ -2,16 +2,16 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
-        "database/sql"
 
-        _ "github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 // App struct
 type App struct {
 	ctx context.Context
-        db  *sql.DB
+	db  *sql.DB
 }
 
 // NewApp creates a new App application struct
@@ -24,25 +24,25 @@ func NewApp() *App {
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 
-        db, err := dbconnect()
-        a.db = db
+	db, err := dbconnect()
+	a.db = db
 
-        if err != nil {
-            fmt.Println("Failed to connect to database:", err)
-            return
-        }
+	if err != nil {
+		fmt.Println("Failed to connect to database:", err)
+		return
+	}
 }
 
-func (a *App) shutdown(ctx context.Context) {
-        a.db.Close()
+func (a *App) shutdown(_ context.Context) {
+	a.db.Close()
 }
 
 func dbconnect() (*sql.DB, error) {
-    db, err := sql.Open("sqlite3", "./nerrite.db")
-    if err != nil {
-        return nil, err
-    }
-    return db, nil
+	db, err := sql.Open("sqlite3", "./nerrite.db")
+	if err != nil {
+		return nil, err
+	}
+	return db, nil
 }
 
 // Greet returns a greeting for the given name
