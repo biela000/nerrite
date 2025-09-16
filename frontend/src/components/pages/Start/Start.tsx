@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import classes from './Start.module.css'
 import KeyButton from '../../ui/KeyButton/KeyButton'
 import Input from '../../ui/Input/Input'
+import { CheckIfUserExists } from '../../../../wailsjs/go/main/App'
 
 export default function Start() {
   const [password, setPassword] = useState('')
   const [inputVisible, setInputVisible] = useState(false)
+  const [userExists, setUserExists] = useState(true)
 
   const passwordInput = useRef<HTMLInputElement>(null)
 
@@ -21,6 +23,10 @@ export default function Start() {
   }
 
   useEffect(() => {
+    CheckIfUserExists('nerriter').then(setUserExists)
+  }, [CheckIfUserExists, setUserExists])
+
+  useEffect(() => {
     if (inputVisible) {
       passwordInput.current?.focus()
 
@@ -34,6 +40,11 @@ export default function Start() {
 
   return (
     <div className={classes.wrapper}>
+      {(!userExists &&
+        <p className={classes.reminder}>
+          if this is your first time, remember the password you input
+        </p>
+      )}
       <KeyButton onClick={handleKeyButtonClick}>
         get in
       </KeyButton>

@@ -49,3 +49,13 @@ func dbconnect() (*sql.DB, error) {
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
+
+func (a *App) CheckIfUserExists(name string) (bool, error) {
+	var exists bool
+	query := "SELECT EXISTS(SELECT 1 FROM user WHERE name = ?)"
+	err := a.db.QueryRow(query, name).Scan(&exists)
+	if err != nil {
+		return false, err
+	}
+	return exists, nil
+}
