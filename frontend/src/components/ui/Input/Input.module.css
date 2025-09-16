@@ -1,0 +1,18 @@
+.input {
+  outline: none;
+  border: 0.1rem dashed rgba(0, 0, 0, 0.1);
+  transition: border-color 0.2s ease;
+  border-radius: 0.5rem;
+
+  font-size: 1.5rem;
+
+  padding: 0.5rem;
+
+  &:focus {
+    border-color: rgba(0, 0, 0, 0.2)
+  }
+
+  &:active {
+    border-color: rgba(0, 0, 0, 0.4)
+  }
+}

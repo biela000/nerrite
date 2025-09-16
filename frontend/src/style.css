@@ -1,0 +1,45 @@
+:root {
+  --background-color: #ffffff;
+  --foreground-color: #000000;
+  --accent-color1: #f72817;
+  --accent-color2: #1b245a;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Oxygen", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+html {
+  background-color: var(--background-color);
+  text-align: center;
+  color: var(--foreground-color);
+}
+
+body {
+  margin: 0;
+  color: var(--foreground-color);
+  font-family: "Oxygen", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  font-size: 16px;
+}
+
+@font-face {
+  font-family: "Oxygen";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""),
+    url("assets/fonts/OxygenMono-Regular.ttf") format("ttf");
+}
+
+#app {
+  height: 100vh;
+  text-align: center;
+}
