@@ -3,11 +3,15 @@ package main
 import (
 	"context"
 	"fmt"
+        "database/sql"
+
+        _ "github.com/mattn/go-sqlite3"
 )
 
 // App struct
 type App struct {
 	ctx context.Context
+        db  *sql.DB
 }
 
 // NewApp creates a new App application struct
@@ -19,6 +23,26 @@ func NewApp() *App {
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
+
+        db, err := dbconnect()
+        a.db = db
+
+        if err != nil {
+            fmt.Println("Failed to connect to database:", err)
+            return
+        }
+}
+
+func (a *App) shutdown(ctx context.Context) {
+        a.db.Close()
+}
+
+func dbconnect() (*sql.DB, error) {
+    db, err := sql.Open("sqlite3", "./nerrite.db")
+    if err != nil {
+        return nil, err
+    }
+    return db, nil
 }
 
 // Greet returns a greeting for the given name
