@@ -5,6 +5,7 @@ import Input from '../../ui/Input/Input'
 import { CheckIfUserExists } from '../../../../wailsjs/go/main/App'
 
 const PASSWORD_TIMER = 5
+const DEFAULT_USERNAME = 'nerriter'
 
 export default function Start() {
   const [password, setPassword] = useState('')
@@ -15,6 +16,10 @@ export default function Start() {
   const passwordInput = useRef<HTMLInputElement>(null)
 
   const handleKeyButtonClick = () => {
+    if (inputVisible) {
+
+    }
+
     setInputVisible(true)
   }
 
@@ -23,7 +28,7 @@ export default function Start() {
   }
 
   useEffect(() => {
-    CheckIfUserExists('nerriter').then(setUserExists)
+    CheckIfUserExists(DEFAULT_USERNAME).then(setUserExists)
   }, [CheckIfUserExists, setUserExists])
 
   useEffect(() => {

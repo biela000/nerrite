@@ -3,4 +3,8 @@
 
 export function CheckIfUserExists(arg1:string):Promise<boolean>;
 
+export function CreateUser(arg1:string,arg2:string):Promise<string>;
+
 export function Greet(arg1:string):Promise<string>;
+
+export function LoginUser(arg1:string,arg2:string):Promise<string>;
