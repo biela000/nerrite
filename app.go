@@ -68,7 +68,7 @@ func (a *App) LoginUser(name string, password string) (string, error) {
 	err := a.db.QueryRow(query, name).Scan(&storedPassword)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			a.CreateUser(name, password)
+			return a.CreateUser(name, password)
 		}
 		return "", err
 	}

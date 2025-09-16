@@ -2,12 +2,15 @@ import { useEffect, useRef, useState } from 'react'
 import classes from './Start.module.css'
 import KeyButton from '../../ui/KeyButton/KeyButton'
 import Input from '../../ui/Input/Input'
-import { CheckIfUserExists } from '../../../../wailsjs/go/main/App'
+import { CheckIfUserExists, LoginUser } from '../../../../wailsjs/go/main/App'
+import { useNavigate } from 'react-router'
 
 const PASSWORD_TIMER = 5
 const DEFAULT_USERNAME = 'nerriter'
 
 export default function Start() {
+  const navigate = useNavigate()
+
   const [password, setPassword] = useState('')
   const [inputVisible, setInputVisible] = useState(false)
   const [userExists, setUserExists] = useState(true)
@@ -17,7 +20,9 @@ export default function Start() {
 
   const handleKeyButtonClick = () => {
     if (inputVisible) {
-
+      LoginUser(DEFAULT_USERNAME, password).then(() => {
+        navigate('/home')
+      })
     }
 
     setInputVisible(true)
