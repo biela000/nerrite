@@ -1,6 +1,6 @@
 .input {
   outline: none;
-  border: 0.1rem dashed rgba(0, 0, 0, 0.1);
+  border: 0.1rem solid rgba(0, 0, 0, 0.1);
   transition: border-color 0.2s ease;
   border-radius: 0.5rem;
 
