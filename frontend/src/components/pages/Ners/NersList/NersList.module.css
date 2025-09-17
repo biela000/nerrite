@@ -1,0 +1,8 @@
+.list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+
+  height: 70vh;
+
+  list-style-type: none;
+}
