@@ -9,25 +9,27 @@ export interface LoginButtonProps {
   password: string
   buttonTimerAmt: number
   setButtonTimerAmt: React.Dispatch<React.SetStateAction<number>>
+  loginButtonRef: React.RefObject<HTMLButtonElement>
 }
 
 export default function LoginButton({
   password,
   buttonTimerAmt,
   setButtonTimerAmt,
+  loginButtonRef,
 }: LoginButtonProps) {
   const navigate = useNavigate()
 
-  const handleKeyButtonClick = () => {
+  const handleButtonClick = () => {
     if (buttonTimerAmt > 0) {
       LoginUser(DEFAULT_USERNAME, password).then(() => {
-        return navigate('/ners')
+        navigate('/ners')
       })
+    } else {
+      setButtonTimerAmt(PASSWORD_TIMER)
     }
 
-    setButtonTimerAmt(PASSWORD_TIMER)
   }
-
   useEffect(() => {
     let timeout: NodeJS.Timeout
 
@@ -41,7 +43,11 @@ export default function LoginButton({
   }, [buttonTimerAmt, setButtonTimerAmt])
 
   return (
-    <KeyButton className={classes.button} onClick={handleKeyButtonClick}>
+    <KeyButton
+      className={classes.button}
+      onClick={handleButtonClick}
+      buttonRef={loginButtonRef}
+    >
       get in
       <span className={`${classes.timer} ${buttonTimerAmt > 0 && classes.visible}`}>
         {buttonTimerAmt}

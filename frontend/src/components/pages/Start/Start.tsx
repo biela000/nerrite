@@ -3,9 +3,7 @@ import classes from './Start.module.css'
 import Input from '../../ui/Input/Input'
 import { CheckIfUserExists } from '../../../../wailsjs/go/main/App'
 import LoginButton from './LoginButton/LoginButton'
-
-const PASSWORD_TIMER = 5
-const DEFAULT_USERNAME = 'nerriter'
+import { DEFAULT_USERNAME, PASSWORD_TIMER } from '../../../constants'
 
 export default function Start() {
   const [password, setPassword] = useState('')
@@ -13,10 +11,25 @@ export default function Start() {
   const [buttonTimerAmt, setButtonTimerAmt] = useState(0)
 
   const passwordInput = useRef<HTMLInputElement>(null)
+  const loginButton = useRef<HTMLButtonElement>(null)
 
   const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     setPassword(event.target.value)
   }
+
+  useEffect(() => {
+    const onKeyUp = (event: KeyboardEvent) => {
+      if (event.key === 'Enter') {
+        loginButton.current?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+      }
+    }
+
+    window.addEventListener('keyup', onKeyUp)
+
+    return () => {
+      window.removeEventListener('keyup', onKeyUp)
+    }
+  }, [])
 
   useEffect(() => {
     CheckIfUserExists(DEFAULT_USERNAME).then(setUserExists)
@@ -41,6 +54,7 @@ export default function Start() {
         password={password}
         buttonTimerAmt={buttonTimerAmt}
         setButtonTimerAmt={setButtonTimerAmt}
+        loginButtonRef={loginButton}
       />
       <Input
         type="password"
