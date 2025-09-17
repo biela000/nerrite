@@ -1,0 +1,15 @@
+.button {
+  position: relative;
+
+  .timer {
+    position: absolute;
+    right: 1rem;
+
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    &.visible {
+      opacity: 0.4;
+    }
+  }
+}

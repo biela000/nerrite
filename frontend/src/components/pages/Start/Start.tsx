@@ -1,32 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 import classes from './Start.module.css'
-import KeyButton from '../../ui/KeyButton/KeyButton'
 import Input from '../../ui/Input/Input'
-import { CheckIfUserExists, LoginUser } from '../../../../wailsjs/go/main/App'
-import { useNavigate } from 'react-router'
+import { CheckIfUserExists } from '../../../../wailsjs/go/main/App'
+import LoginButton from './LoginButton/LoginButton'
 
 const PASSWORD_TIMER = 5
 const DEFAULT_USERNAME = 'nerriter'
 
 export default function Start() {
-  const navigate = useNavigate()
-
   const [password, setPassword] = useState('')
-  const [inputVisible, setInputVisible] = useState(false)
   const [userExists, setUserExists] = useState(true)
   const [buttonTimerAmt, setButtonTimerAmt] = useState(0)
 
   const passwordInput = useRef<HTMLInputElement>(null)
-
-  const handleKeyButtonClick = () => {
-    if (inputVisible) {
-      LoginUser(DEFAULT_USERNAME, password).then(() => {
-        navigate('/home')
-      })
-    }
-
-    setInputVisible(true)
-  }
 
   const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     setPassword(event.target.value)
@@ -37,27 +23,12 @@ export default function Start() {
   }, [CheckIfUserExists, setUserExists])
 
   useEffect(() => {
-    if (inputVisible) {
+    if (buttonTimerAmt === PASSWORD_TIMER) {
       passwordInput.current?.focus()
-      setButtonTimerAmt(PASSWORD_TIMER)
-    } else {
+    } else if (buttonTimerAmt === 0) {
       setPassword('')
     }
-  }, [inputVisible, setInputVisible, setPassword, PASSWORD_TIMER])
-
-  useEffect(() => {
-    let timeout: number;
-
-    if (buttonTimerAmt === 0) {
-      setInputVisible(false)
-    } else {
-      timeout = setTimeout(() => {
-        setButtonTimerAmt(prevButtonTimerAmt => prevButtonTimerAmt - 1)
-      }, 1000)
-    }
-
-    return () => clearTimeout(timeout)
-  }, [buttonTimerAmt, setInputVisible, setButtonTimerAmt])
+  }, [buttonTimerAmt, setPassword, PASSWORD_TIMER])
 
   return (
     <div className={classes.wrapper}>
@@ -66,15 +37,14 @@ export default function Start() {
           if this is your first time, remember the password you input
         </p>
       }
-      <KeyButton className={classes.button} onClick={handleKeyButtonClick}>
-        get in
-        <span className={`${classes.timer} ${buttonTimerAmt > 0 && classes.visible}`}>
-          {buttonTimerAmt}
-        </span>
-      </KeyButton>
+      <LoginButton
+        password={password}
+        buttonTimerAmt={buttonTimerAmt}
+        setButtonTimerAmt={setButtonTimerAmt}
+      />
       <Input
         type="password"
-        className={`${classes.input} ${inputVisible && classes.visible}`}
+        className={`${classes.input} ${buttonTimerAmt && classes.visible}`}
         onChange={handlePasswordChange}
         value={password}
         inputRef={passwordInput}
